@@ -1,0 +1,1522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>We Always Believe — Manchester United</title>
+<style>
+/* ===== RESET & ROOT ===== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+:root {
+  --red: #DA020E;
+  --red-deep: #8B0109;
+  --gold: #C9A227;
+  --black: #080808;
+  --dark: #111111;
+  --dark2: #1A1A1A;
+  --dark3: #232323;
+  --white: #FFFFFF;
+  --muted: rgba(255,255,255,0.55);
+  --faint: rgba(255,255,255,0.25);
+  --serif: 'Georgia', 'Times New Roman', serif;
+  --sans: 'Arial Black', 'Arial', sans-serif;
+  --mono: 'Courier New', monospace;
+}
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--serif);
+  overflow-x: hidden;
+  line-height: 1.7;
+}
+
+/* Grain overlay */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+}
+
+/* ===== NAV ===== */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 3rem;
+  transition: background 0.5s, backdrop-filter 0.5s, border-color 0.5s;
+  border-bottom: 1px solid transparent;
+}
+nav.solid {
+  background: rgba(8,8,8,0.93);
+  backdrop-filter: blur(14px);
+  border-bottom-color: rgba(201,162,39,0.18);
+}
+.nav-brand {
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  letter-spacing: 0.38em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a {
+  font-family: var(--sans);
+  font-size: 0.58rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--faint);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.nav-links a:hover { color: var(--gold); }
+
+/* ===== REVEAL ANIMATION ===== */
+.reveal { opacity: 0; transform: translateY(36px); transition: opacity 0.9s ease, transform 0.9s ease; }
+.reveal.in { opacity: 1; transform: none; }
+.reveal-l { opacity: 0; transform: translateX(-40px); transition: opacity 0.9s ease, transform 0.9s ease; }
+.reveal-l.in { opacity: 1; transform: none; }
+.reveal-r { opacity: 0; transform: translateX(40px); transition: opacity 0.9s ease, transform 0.9s ease; }
+.reveal-r.in { opacity: 1; transform: none; }
+
+/* ===== SHARED ===== */
+.container { max-width: 1180px; margin: 0 auto; padding: 0 2.5rem; }
+.label {
+  font-family: var(--sans);
+  font-size: 0.58rem;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 0.85rem;
+}
+.gold-bar { width: 52px; height: 2px; background: var(--gold); margin: 1.2rem 0 2rem; }
+.red-bar { width: 52px; height: 2px; background: var(--red); margin: 1.2rem 0 2rem; }
+h2.section-title {
+  font-family: var(--sans);
+  font-size: clamp(2.1rem, 5vw, 3.4rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+  color: var(--white);
+}
+h2.section-title em { color: var(--red); font-style: normal; }
+
+/* img loading */
+img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease, filter 0.6s ease;
+}
+
+/* ===== 1. HERO ===== */
+#hero {
+  position: relative;
+  height: 100vh;
+  min-height: 680px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+}
+.hero-img {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.hero-img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: brightness(0.28) saturate(0.6);
+  transform: scale(1.05);
+  animation: slowZoom 20s ease-in-out infinite alternate;
+}
+@keyframes slowZoom { from { transform: scale(1.05); } to { transform: scale(1.12); } }
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 40%, rgba(218,2,14,0.16) 0%, transparent 70%),
+    linear-gradient(180deg, rgba(8,8,8,0.2) 0%, rgba(8,8,8,0.55) 60%, #080808 100%);
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.4rem;
+  opacity: 0;
+  animation: fadeUp 1.8s 0.4s forwards;
+}
+@keyframes fadeUp { to { opacity: 1; transform: translateY(0); } from { opacity: 0; transform: translateY(28px); } }
+.hero-badge {
+  font-family: var(--sans);
+  font-size: 0.6rem;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid rgba(201,162,39,0.38);
+  padding: 0.4rem 1.3rem;
+}
+.hero-h1 {
+  font-family: var(--sans);
+  font-size: clamp(4.5rem, 11vw, 9.5rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  line-height: 0.88;
+  color: var(--white);
+  text-shadow: 0 0 80px rgba(218,2,14,0.45);
+}
+.hero-h1 span { display: block; color: var(--red); font-size: clamp(2.5rem, 6vw, 5rem); letter-spacing: 0.02em; }
+.hero-rule { width: 72px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+.hero-sub {
+  font-style: italic;
+  font-size: clamp(0.88rem, 1.8vw, 1.1rem);
+  color: var(--muted);
+  letter-spacing: 0.12em;
+}
+.hero-scroll {
+  position: absolute;
+  bottom: 2.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0;
+  animation: fadeUp 1.4s 2s forwards;
+}
+.hero-scroll span { font-family: var(--sans); font-size: 0.52rem; letter-spacing: 0.4em; color: var(--faint); text-transform: uppercase; }
+.scroll-line {
+  width: 1px;
+  height: 42px;
+  background: linear-gradient(180deg, var(--gold), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse { 0%,100%{opacity:0.4;transform:scaleY(1)} 50%{opacity:1;transform:scaleY(1.1)} }
+
+/* ===== ERA DIVIDER ===== */
+.era-divider {
+  position: relative;
+  padding: 3.5rem 0;
+  text-align: center;
+  overflow: hidden;
+}
+.era-divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201,162,39,0.35), transparent);
+}
+.era-divider-inner {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: var(--black);
+  padding: 0 2rem;
+  position: relative;
+  z-index: 1;
+}
+.era-num {
+  font-family: var(--sans);
+  font-size: 0.58rem;
+  letter-spacing: 0.38em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+.era-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--red); }
+.era-title {
+  font-family: var(--sans);
+  font-size: 0.58rem;
+  letter-spacing: 0.38em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+/* ===== SECTION BASE ===== */
+section { padding: 6rem 0; position: relative; overflow: hidden; }
+
+/* ===== 2. INTRO QUOTE ===== */
+#intro {
+  background: var(--dark);
+  padding: 5rem 0;
+  text-align: center;
+}
+#intro::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(218,2,14,0.4), transparent);
+}
+.big-quote {
+  font-style: italic;
+  font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+  color: rgba(255,255,255,0.82);
+  max-width: 820px;
+  margin: 0 auto;
+  line-height: 1.55;
+}
+.big-quote-attr {
+  margin-top: 1.5rem;
+  font-family: var(--sans);
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+
+/* ===== 3. BUSBY BABES ===== */
+#busby { background: var(--black); }
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+.two-col.flip { direction: rtl; }
+.two-col.flip > * { direction: ltr; }
+.img-frame {
+  position: relative;
+  overflow: hidden;
+}
+.img-frame::before {
+  content: '';
+  position: absolute;
+  top: 0.8rem; right: -0.8rem;
+  width: 100%; height: 100%;
+  border: 1px solid rgba(201,162,39,0.3);
+  z-index: 0;
+  pointer-events: none;
+}
+.img-frame img { position: relative; z-index: 1; }
+.img-frame:hover img { transform: scale(1.04); filter: brightness(0.9); }
+.img-caption {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(0deg, rgba(8,8,8,0.9), transparent);
+  padding: 1.5rem 1.2rem 0.8rem;
+  z-index: 2;
+  font-family: var(--sans);
+  font-size: 0.57rem;
+  letter-spacing: 0.25em;
+  color: rgba(255,255,255,0.55);
+  text-transform: uppercase;
+}
+.text-block p {
+  font-size: 0.98rem;
+  color: var(--muted);
+  margin-bottom: 1.2rem;
+  line-height: 1.85;
+}
+.text-block p strong { color: var(--white); font-style: italic; }
+.player-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1.5rem;
+}
+.player-tag {
+  font-family: var(--sans);
+  font-size: 0.57rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border: 1px solid rgba(201,162,39,0.3);
+  padding: 0.35rem 0.8rem;
+  color: var(--gold);
+}
+
+/* ===== 4. PLAYERS GRID ===== */
+.players-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: rgba(255,255,255,0.05);
+  margin-top: 3rem;
+}
+.player-card {
+  background: var(--dark);
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 3/4;
+  cursor: default;
+}
+.player-card img { filter: grayscale(60%) brightness(0.75); transition: filter 0.5s ease, transform 0.5s ease; }
+.player-card:hover img { filter: grayscale(0%) brightness(0.9); transform: scale(1.06); }
+.player-card-info {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 2rem 1rem 1rem;
+  background: linear-gradient(0deg, rgba(8,8,8,0.95) 0%, transparent 100%);
+  z-index: 2;
+  transition: padding 0.4s;
+}
+.player-card:hover .player-card-info { padding-bottom: 1.3rem; }
+.player-name {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--white);
+  display: block;
+}
+.player-role {
+  font-family: var(--sans);
+  font-size: 0.52rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: block;
+  margin-top: 0.2rem;
+}
+
+/* ===== 5. MUNICH — DARK MEMORIAL ===== */
+#munich {
+  background: var(--black);
+  padding: 0;
+  position: relative;
+}
+.munich-hero {
+  position: relative;
+  height: 75vh;
+  min-height: 500px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+}
+.munich-hero-img {
+  position: absolute;
+  inset: 0;
+}
+.munich-hero-img img {
+  filter: brightness(0.2) saturate(0.3) sepia(0.4);
+}
+.munich-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(0deg, rgba(8,8,8,1) 0%, rgba(8,8,8,0.6) 45%, rgba(8,8,8,0.2) 100%),
+    radial-gradient(ellipse at 50% 80%, rgba(139,1,9,0.2) 0%, transparent 60%);
+}
+.munich-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding: 4rem 3rem 5rem;
+  text-align: center;
+}
+.munich-date {
+  font-family: var(--sans);
+  font-size: clamp(4rem, 12vw, 10rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: rgba(255,255,255,0.08);
+  display: block;
+  user-select: none;
+}
+.munich-headline {
+  font-family: var(--sans);
+  font-size: clamp(1.6rem, 4vw, 3rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--white);
+  margin-top: 1rem;
+}
+.munich-sub {
+  font-style: italic;
+  font-size: clamp(0.9rem, 2vw, 1.15rem);
+  color: var(--muted);
+  margin-top: 0.75rem;
+  letter-spacing: 0.08em;
+}
+.munich-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: rgba(255,255,255,0.06);
+  margin: 0;
+  border-top: 1px solid rgba(218,2,14,0.2);
+}
+.munich-stat {
+  background: var(--dark);
+  padding: 2.5rem 2rem;
+  text-align: center;
+}
+.munich-stat-num {
+  font-family: var(--sans);
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 900;
+  color: var(--red);
+  display: block;
+  line-height: 1;
+}
+.munich-stat-label {
+  font-family: var(--sans);
+  font-size: 0.58rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 0.6rem;
+  display: block;
+}
+.munich-names {
+  background: var(--dark2);
+  border-top: 1px solid rgba(255,255,255,0.05);
+  padding: 3rem;
+  text-align: center;
+}
+.munich-names-title {
+  font-family: var(--sans);
+  font-size: 0.58rem;
+  letter-spacing: 0.42em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 1.8rem;
+  display: block;
+}
+.names-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.2rem 2.5rem;
+}
+.name-item {
+  font-style: italic;
+  font-size: 1.05rem;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.4;
+}
+.name-item span {
+  display: block;
+  font-family: var(--sans);
+  font-style: normal;
+  font-size: 0.5rem;
+  letter-spacing: 0.25em;
+  color: var(--faint);
+  text-transform: uppercase;
+  margin-top: 0.1rem;
+}
+.munich-quote-band {
+  background: var(--red-deep);
+  padding: 2.5rem 3rem;
+  text-align: center;
+  border-top: 2px solid var(--red);
+}
+.munich-quote-band q {
+  font-style: italic;
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
+  color: rgba(255,255,255,0.88);
+  line-height: 1.5;
+}
+.munich-quote-band cite {
+  display: block;
+  margin-top: 0.8rem;
+  font-family: var(--sans);
+  font-size: 0.58rem;
+  letter-spacing: 0.3em;
+  color: rgba(255,255,255,0.45);
+  text-transform: uppercase;
+  font-style: normal;
+}
+
+/* ===== 6. REBUILD ===== */
+#rebuild { background: var(--dark); }
+.rebuild-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+.rebuild-card {
+  background: var(--dark2);
+  border: 1px solid rgba(255,255,255,0.06);
+  overflow: hidden;
+  position: relative;
+  transition: border-color 0.4s, transform 0.4s;
+}
+.rebuild-card:hover { border-color: rgba(201,162,39,0.3); transform: translateY(-5px); }
+.rebuild-card-img { height: 220px; overflow: hidden; }
+.rebuild-card-img img { filter: brightness(0.7) saturate(0.8); }
+.rebuild-card:hover .rebuild-card-img img { transform: scale(1.05); filter: brightness(0.85) saturate(1); }
+.rebuild-card-body { padding: 1.4rem; }
+.rebuild-card-year {
+  font-family: var(--sans);
+  font-size: 0.56rem;
+  letter-spacing: 0.35em;
+  color: var(--gold);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.rebuild-card-title {
+  font-family: var(--sans);
+  font-size: 1.05rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 0.7rem;
+  line-height: 1.1;
+}
+.rebuild-card-text { font-size: 0.82rem; color: var(--muted); line-height: 1.7; }
+
+/* ===== 7. FERGUSON ERA ===== */
+#ferguson { background: var(--black); }
+.ferguson-hero {
+  position: relative;
+  height: 60vh;
+  min-height: 420px;
+  overflow: hidden;
+  margin-bottom: 0;
+}
+.ferguson-hero img { filter: brightness(0.35) saturate(0.8); }
+.ferguson-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(8,8,8,0.9) 0%, rgba(8,8,8,0.4) 50%, rgba(8,8,8,0.1) 100%),
+    linear-gradient(0deg, rgba(8,8,8,1) 0%, transparent 40%);
+}
+.ferguson-hero-text {
+  position: absolute;
+  top: 50%;
+  left: 4rem;
+  transform: translateY(-50%);
+  max-width: 500px;
+}
+.f-eyebrow {
+  font-family: var(--sans);
+  font-size: 0.58rem;
+  letter-spacing: 0.38em;
+  color: var(--gold);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 1rem;
+}
+.f-name {
+  font-family: var(--sans);
+  font-size: clamp(2.2rem, 6vw, 4.5rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 0.9;
+  color: var(--white);
+}
+.f-name span { display: block; color: var(--red); }
+.f-stat-row {
+  display: flex;
+  gap: 2.5rem;
+  margin-top: 1.8rem;
+}
+.f-stat-item {}
+.f-stat-n {
+  font-family: var(--sans);
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--gold);
+  display: block;
+  line-height: 1;
+}
+.f-stat-l {
+  font-family: var(--sans);
+  font-size: 0.52rem;
+  letter-spacing: 0.25em;
+  color: var(--faint);
+  text-transform: uppercase;
+  display: block;
+  margin-top: 0.2rem;
+}
+.trophies-band {
+  background: var(--dark);
+  padding: 3rem;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1px;
+  border-top: 1px solid rgba(201,162,39,0.12);
+}
+.trophy-item {
+  background: var(--dark2);
+  text-align: center;
+  padding: 1.8rem 1rem;
+}
+.trophy-count {
+  font-family: var(--sans);
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: var(--gold);
+  display: block;
+}
+.trophy-name {
+  font-family: var(--sans);
+  font-size: 0.52rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-top: 0.35rem;
+  display: block;
+  line-height: 1.4;
+}
+
+/* ===== 8. TREBLE 99 ===== */
+#treble {
+  background: var(--dark);
+  position: relative;
+}
+#treble::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.treble-layout {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 4rem;
+  align-items: start;
+}
+.treble-img-stack {
+  position: relative;
+}
+.treble-main-img {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+}
+.treble-main-img img { filter: brightness(0.8) saturate(0.9); }
+.treble-main-img:hover img { transform: scale(1.04); filter: brightness(0.9) saturate(1.1); }
+.treble-badge {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.2rem;
+  background: var(--red);
+  padding: 0.6rem 1rem;
+  text-align: center;
+  z-index: 2;
+}
+.treble-badge-title {
+  font-family: var(--sans);
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: var(--white);
+  display: block;
+  line-height: 1;
+}
+.treble-badge-sub {
+  font-family: var(--sans);
+  font-size: 0.5rem;
+  letter-spacing: 0.25em;
+  color: rgba(255,255,255,0.7);
+  text-transform: uppercase;
+  display: block;
+}
+.treble-timeline {
+  margin-top: 2.5rem;
+}
+.timeline-item {
+  display: flex;
+  gap: 1.2rem;
+  margin-bottom: 1.4rem;
+  align-items: flex-start;
+}
+.timeline-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--red);
+  margin-top: 0.5rem;
+  flex-shrink: 0;
+}
+.timeline-dot.gold { background: var(--gold); }
+.timeline-text-title {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--white);
+  display: block;
+}
+.timeline-text-sub {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-top: 0.2rem;
+}
+.heroes-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 3rem;
+}
+.hero-thumb {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 2/3;
+}
+.hero-thumb img { filter: brightness(0.65) saturate(0.7); transition: filter 0.5s, transform 0.5s; }
+.hero-thumb:hover img { filter: brightness(0.85) saturate(1); transform: scale(1.06); }
+.hero-thumb-info {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 1.5rem 0.8rem 0.8rem;
+  background: linear-gradient(0deg, rgba(8,8,8,0.95), transparent);
+  z-index: 2;
+}
+.h-name { font-family: var(--sans); font-size: 0.72rem; font-weight: 900; text-transform: uppercase; color: var(--white); display: block; }
+.h-role { font-family: var(--sans); font-size: 0.5rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); display: block; margin-top: 0.15rem; }
+
+/* ===== 9. RONALDO ERA ===== */
+#ronaldo { background: var(--black); }
+.ronaldo-layout {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 4rem;
+  align-items: center;
+}
+.ronaldo-img {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 3/4;
+}
+.ronaldo-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(218,2,14,0.2), transparent 60%);
+  pointer-events: none;
+}
+.ronaldo-img img { filter: brightness(0.75) saturate(0.9); }
+.ronaldo-img:hover img { transform: scale(1.04); filter: brightness(0.88) saturate(1.1); }
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: rgba(255,255,255,0.05);
+  margin: 2rem 0;
+}
+.stat-box {
+  background: var(--dark2);
+  padding: 1.4rem 1.2rem;
+}
+.stat-box-num {
+  font-family: var(--sans);
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: var(--red);
+  display: block;
+  line-height: 1;
+}
+.stat-box-label {
+  font-family: var(--sans);
+  font-size: 0.52rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-top: 0.3rem;
+  display: block;
+}
+.pl-wins-strip {
+  background: var(--red);
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+.pl-wins-num {
+  font-family: var(--sans);
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: var(--white);
+}
+.pl-wins-text {
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.5;
+}
+
+/* ===== 10. PRESENT ===== */
+#present { background: var(--dark); }
+.present-banner {
+  background: var(--dark2);
+  border: 1px solid rgba(255,255,255,0.05);
+  padding: 2.5rem 3rem;
+  margin-bottom: 3rem;
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+}
+.pb-icon {
+  font-family: var(--sans);
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: rgba(218,2,14,0.25);
+  flex-shrink: 0;
+  line-height: 1;
+}
+.pb-text h3 {
+  font-family: var(--sans);
+  font-size: 1.1rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--white);
+  margin-bottom: 0.5rem;
+}
+.pb-text p { font-size: 0.9rem; color: var(--muted); line-height: 1.75; }
+.fanbase-strip {
+  background: var(--dark2);
+  border-top: 1px solid rgba(201,162,39,0.15);
+  padding: 3rem;
+  text-align: center;
+  margin-top: 4rem;
+}
+.fanbase-num {
+  font-family: var(--sans);
+  font-size: clamp(3.5rem, 9vw, 6.5rem);
+  font-weight: 900;
+  color: var(--gold);
+  display: block;
+  line-height: 1;
+}
+.fanbase-label {
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 0.6rem;
+  display: block;
+}
+
+/* ===== 11. FOREVER / FOOTER ===== */
+#forever {
+  background: var(--black);
+  position: relative;
+  overflow: hidden;
+}
+.forever-bg {
+  position: absolute;
+  inset: 0;
+}
+.forever-bg img { filter: brightness(0.12) saturate(0.3); }
+.forever-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(218,2,14,0.1) 0%, transparent 70%),
+    linear-gradient(180deg, rgba(8,8,8,0.6) 0%, rgba(8,8,8,0.85) 100%);
+}
+.forever-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 8rem 2rem;
+}
+.forever-big {
+  font-family: var(--sans);
+  font-size: clamp(3.5rem, 10vw, 8rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 0.92;
+  color: var(--white);
+  text-shadow: 0 0 80px rgba(218,2,14,0.35);
+}
+.forever-big em { color: var(--red); font-style: normal; display: block; }
+.forever-rule { width: 80px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 2.5rem auto; }
+.forever-sub {
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--muted);
+  letter-spacing: 0.12em;
+}
+footer {
+  background: var(--black);
+  border-top: 1px solid rgba(201,162,39,0.18);
+  padding: 2.5rem 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.footer-left {
+  font-family: var(--sans);
+  font-size: 0.58rem;
+  letter-spacing: 0.3em;
+  color: var(--faint);
+  text-transform: uppercase;
+}
+.footer-center {
+  font-family: var(--sans);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+.footer-right {
+  font-family: var(--sans);
+  font-size: 0.55rem;
+  letter-spacing: 0.25em;
+  color: var(--faint);
+  text-transform: uppercase;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { display: none; }
+  .two-col, .two-col.flip, .treble-layout, .ronaldo-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+  .two-col.flip { direction: ltr; }
+  .rebuild-grid { grid-template-columns: 1fr 1fr; }
+  .players-grid { grid-template-columns: repeat(2, 1fr); }
+  .trophies-band { grid-template-columns: repeat(3, 1fr); }
+  .heroes-row { grid-template-columns: repeat(3, 1fr); }
+  .munich-stats { grid-template-columns: 1fr; }
+  .container { padding: 0 1.5rem; }
+  .ferguson-hero-text { left: 1.5rem; right: 1.5rem; }
+  footer { flex-direction: column; gap: 1rem; text-align: center; }
+  .present-banner { flex-direction: column; gap: 1.5rem; }
+}
+@media (max-width: 600px) {
+  .rebuild-grid { grid-template-columns: 1fr; }
+  .players-grid { grid-template-columns: 1fr 1fr; }
+  .heroes-row { grid-template-columns: 1fr 1fr; }
+  .trophies-band { grid-template-columns: repeat(2, 1fr); }
+  .stat-row { grid-template-columns: 1fr; }
+  .names-list { gap: 0.8rem 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-brand">MUFC — We Always Believe</div>
+  <ul class="nav-links">
+    <li><a href="#busby">The Babes</a></li>
+    <li><a href="#munich">Munich</a></li>
+    <li><a href="#ferguson">Sir Alex</a></li>
+    <li><a href="#treble">Treble '99</a></li>
+    <li><a href="#ronaldo">Ronaldo</a></li>
+    <li><a href="#present">Forever</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-img">
+    <img src="https://i.redd.it/take-me-home-united-road-the-new-tifo-is-unveiled-v0-8x8cd45nulze1.png?width=2048&format=png&auto=webp&s=c000dd4c68b40e87639e11d4689723647007747a" alt="Old Trafford Tifo" loading="eager">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Manchester United — A Visual History</div>
+    <h1 class="hero-h1">
+      We Always
+      <span>Believe</span>
+    </h1>
+    <div class="hero-rule"></div>
+    <p class="hero-sub">Past &nbsp;·&nbsp; Present &nbsp;·&nbsp; Forever</p>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- INTRO QUOTE -->
+<section id="intro">
+  <div class="container">
+    <p class="big-quote reveal">"Manchester United is not just a football club. It is an idea — a belief that no matter what is taken from you, no matter how deep the wound, you rise. You always rise."</p>
+    <p class="big-quote-attr reveal">1878 – Present</p>
+  </div>
+</section>
+
+<!-- ERA DIVIDER: THE PAST -->
+<div class="era-divider" style="background:var(--black);">
+  <div class="era-divider-inner">
+    <span class="era-num">ACT I</span>
+    <div class="era-dot"></div>
+    <span class="era-title">The Past — Glory, Tragedy & Rebuilding</span>
+  </div>
+</div>
+
+<!-- BUSBY BABES -->
+<section id="busby">
+  <div class="container">
+    <div class="two-col">
+      <div class="reveal-l">
+        <div class="img-frame" style="aspect-ratio:4/3;">
+          <img src="https://www.thesun.co.uk/wp-content/uploads/2025/02/sir-matt-busby-waving-fans-859562.jpg?strip=all&w=686" alt="Sir Matt Busby" loading="lazy">
+          <div class="img-caption">Sir Matt Busby — The Architect of a Dream</div>
+        </div>
+      </div>
+      <div class="text-block reveal-r">
+        <span class="label">01 — The Busby Babes Era</span>
+        <h2 class="section-title">The <em>Young</em><br>Dreamers</h2>
+        <div class="gold-bar"></div>
+        <p>In the early 1950s, <strong>Sir Matt Busby</strong> built something extraordinary — a team of prodigiously gifted youngsters who would come to be known the world over as the <strong>Busby Babes</strong>. Average age just 22, they were the most exciting team in England.</p>
+        <p>Winning the First Division in <strong>1956 and 1957</strong>, they played football of breathtaking beauty. Duncan Edwards, Tommy Taylor, Roger Byrne — names that became legends before they had the chance to become everything they could have been.</p>
+        <p>They were on their way to becoming the greatest team in Europe. Then came Munich.</p>
+        <div class="player-tags">
+          <span class="player-tag">Duncan Edwards</span>
+          <span class="player-tag">Tommy Taylor</span>
+          <span class="player-tag">Roger Byrne</span>
+          <span class="player-tag">Eddie Colman</span>
+          <span class="player-tag">David Pegg</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Players grid -->
+    <div class="players-grid reveal" style="margin-top:4rem;">
+      <div class="player-card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSt7Ou2BinqcnoSmM8QmqGdpoclIaq5i5WW2Q&s" alt="Duncan Edwards" loading="lazy">
+        <div class="player-card-info">
+          <span class="player-name">Duncan Edwards</span>
+          <span class="player-role">Midfielder — The Greatest</span>
+        </div>
+      </div>
+      <div class="player-card">
+        <img src="https://assets.manutd.com/AssetPicker/images/0/0/10/126/687708/Legends-Profile_Sir-Bobby-Charlton1523461176559.jpg" alt="Bobby Charlton" loading="lazy">
+        <div class="player-card-info">
+          <span class="player-name">Bobby Charlton</span>
+          <span class="player-role">Midfielder — Munich Survivor</span>
+        </div>
+      </div>
+      <div class="player-card">
+        <img src="https://assets.manutd.com/AssetPicker/images/0/0/10/126/687714/Legends-Profile_Denis-Law1523461764437.jpg" alt="Denis Law" loading="lazy">
+        <div class="player-card-info">
+          <span class="player-name">Denis Law</span>
+          <span class="player-role">Forward — The King</span>
+        </div>
+      </div>
+      <div class="player-card">
+        <img src="https://assets.manutd.com/AssetPicker/images/0/0/10/126/687734/Legends-Profile_George-Best1523521862880.jpg" alt="George Best" loading="lazy">
+        <div class="player-card-info">
+          <span class="player-name">George Best</span>
+          <span class="player-role">Forward — The Fifth Beatle</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MUNICH MEMORIAL -->
+<section id="munich">
+  <div class="munich-hero">
+    <div class="munich-hero-img">
+      <img src="https://content.api.news/v3/images/bin/5adeda4de24e1510b7c9fb313a5daaf4" alt="Munich Memorial" loading="lazy">
+    </div>
+    <div class="munich-overlay"></div>
+    <div class="munich-content reveal">
+      <span class="munich-date">1958</span>
+      <h2 class="munich-headline">The Munich Air Disaster</h2>
+      <p class="munich-sub">6th February 1958 — Munich-Riem Airport, Germany</p>
+    </div>
+  </div>
+
+  <div class="munich-stats reveal">
+    <div class="munich-stat">
+      <span class="munich-stat-num">23</span>
+      <span class="munich-stat-label">Lives Lost</span>
+    </div>
+    <div class="munich-stat">
+      <span class="munich-stat-num">8</span>
+      <span class="munich-stat-label">Players Killed</span>
+    </div>
+    <div class="munich-stat">
+      <span class="munich-stat-num">3</span>
+      <span class="munich-stat-label">Attempts to Take Off</span>
+    </div>
+  </div>
+
+  <div class="munich-names reveal">
+    <span class="munich-names-title">In Eternal Memory — The Eight Players Who Never Returned</span>
+    <div class="names-list">
+      <div class="name-item">Geoff Bent<span>Full-back</span></div>
+      <div class="name-item">Roger Byrne<span>Captain</span></div>
+      <div class="name-item">Eddie Colman<span>Midfielder</span></div>
+      <div class="name-item">Mark Jones<span>Centre-back</span></div>
+      <div class="name-item">David Pegg<span>Winger</span></div>
+      <div class="name-item">Tommy Taylor<span>Centre-forward</span></div>
+      <div class="name-item">Liam Whelan<span>Inside Forward</span></div>
+      <div class="name-item">Duncan Edwards<span>Midfielder</span></div>
+    </div>
+  </div>
+
+  <div class="munich-quote-band reveal">
+    <q>He was the greatest of us all. If Duncan Edwards had lived, I would never have been considered the best player in the world.</q>
+    <cite>— Pelé, on Duncan Edwards</cite>
+  </div>
+</section>
+
+<!-- REBUILD -->
+<section id="rebuild" style="background:var(--dark2);">
+  <div class="container">
+    <span class="label reveal">02 — From the Ashes</span>
+    <h2 class="section-title reveal">The Long Road<br>Back to <em>Glory</em></h2>
+    <div class="gold-bar reveal"></div>
+    <div class="rebuild-grid">
+      <div class="rebuild-card reveal">
+        <div class="rebuild-card-img">
+          <img src="https://i0.wp.com/thesefootballtimes.co/wp-content/uploads/2016/05/busby1.jpg?fit=2197%2C1126&ssl=1" alt="Busby rebuilds" loading="lazy">
+        </div>
+        <div class="rebuild-card-body">
+          <span class="rebuild-card-year">1958 — 1963</span>
+          <div class="rebuild-card-title">Busby Rebuilds</div>
+          <p class="rebuild-card-text">Despite being seriously injured himself, Sir Matt Busby returned to rebuild Manchester United from nothing. Within five years, they won the FA Cup. The man's resolve mirrored the club's soul.</p>
+        </div>
+      </div>
+      <div class="rebuild-card reveal">
+        <div class="rebuild-card-img">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrY_h-UoPYcx2H2rv8Bsr-WZOr1Nci4Fo8aA&s" alt="1968 European Cup" loading="lazy">
+        </div>
+        <div class="rebuild-card-body">
+          <span class="rebuild-card-year">1968</span>
+          <div class="rebuild-card-title">European Champions</div>
+          <p class="rebuild-card-text">Ten years after Munich, Manchester United became the first English club to win the European Cup. At Wembley, Bobby Charlton — a survivor — lifted the trophy. The circle was complete.</p>
+        </div>
+      </div>
+      <div class="rebuild-card reveal">
+        <div class="rebuild-card-img">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiZYazXYYS9RkoyK0ziwZgGz3474BJut3fBQ&s" alt="Holy Trinity" loading="lazy">
+        </div>
+        <div class="rebuild-card-body">
+          <span class="rebuild-card-year">1960s</span>
+          <div class="rebuild-card-title">The Holy Trinity</div>
+          <p class="rebuild-card-text">Charlton, Best, Law — three European Footballers of the Year in a single club. The Busby Babes had given them a blueprint. The Holy Trinity gave the world something to believe in again.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ERA DIVIDER: SIR ALEX -->
+<div class="era-divider" style="background:var(--dark2);">
+  <div class="era-divider-inner" style="background:var(--dark2);">
+    <span class="era-num">ACT II</span>
+    <div class="era-dot"></div>
+    <span class="era-title">The Ferguson Era — The Greatest Manager</span>
+  </div>
+</div>
+
+<!-- FERGUSON -->
+<section id="ferguson">
+  <div class="ferguson-hero">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuO_QpObkx4jUEzwI0mErWPlKeDWvo4EZvhA&s" alt="Sir Alex Ferguson" loading="lazy">
+    <div class="ferguson-hero-overlay"></div>
+    <div class="ferguson-hero-text reveal-l">
+      <span class="f-eyebrow">1986 — 2013</span>
+      <h2 class="f-name">Sir Alex<br><span>Ferguson</span></h2>
+      <div class="f-stat-row">
+        <div class="f-stat-item">
+          <span class="f-stat-n">27</span>
+          <span class="f-stat-l">Years in charge</span>
+        </div>
+        <div class="f-stat-item">
+          <span class="f-stat-n">38</span>
+          <span class="f-stat-l">Trophies won</span>
+        </div>
+        <div class="f-stat-item">
+          <span class="f-stat-n">13</span>
+          <span class="f-stat-l">League titles</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="trophies-band reveal">
+    <div class="trophy-item">
+      <span class="trophy-count">13</span>
+      <span class="trophy-name">Premier League Titles</span>
+    </div>
+    <div class="trophy-item">
+      <span class="trophy-count">5</span>
+      <span class="trophy-name">FA Cups</span>
+    </div>
+    <div class="trophy-item">
+      <span class="trophy-count">4</span>
+      <span class="trophy-name">League Cups</span>
+    </div>
+    <div class="trophy-item">
+      <span class="trophy-count">2</span>
+      <span class="trophy-name">Champions League</span>
+    </div>
+    <div class="trophy-item">
+      <span class="trophy-count">1</span>
+      <span class="trophy-name">Club World Cup</span>
+    </div>
+    <div class="trophy-item">
+      <span class="trophy-count">38</span>
+      <span class="trophy-name">Total Trophies</span>
+    </div>
+  </div>
+
+  <div class="container" style="padding-top:4rem;">
+    <div class="two-col">
+      <div class="text-block reveal-l">
+        <span class="label">The Greatest Manager</span>
+        <h2 class="section-title">A Dynasty<br><em>Built to Last</em></h2>
+        <div class="gold-bar"></div>
+        <p>When Sir Alex Ferguson arrived at Old Trafford in 1986, United had not won the league in 19 years. What followed was the most dominant managerial reign in the history of English football.</p>
+        <p>Ferguson didn't just build teams — he built <strong>generations</strong>. The Class of '92 came through his youth academy: Scholes, Giggs, the Nevilles, Butt, and two Beckhams. He created an identity that outlasted every player.</p>
+        <p>His famous phrase — <strong>"Fergie Time"</strong> — wasn't just about injury time goals. It was a philosophy: never stop believing, not even when the clock has run out.</p>
+      </div>
+      <div class="reveal-r">
+        <div class="img-frame" style="aspect-ratio:3/4;">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQO5D2T_u_ujvkz3wM83p8FH1TQmTmqWVBHIQ&s" alt="Ferguson closeup" loading="lazy">
+          <div class="img-caption">Sir Alex Ferguson — 27 years, 38 trophies</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TREBLE 99 -->
+<section id="treble">
+  <div class="container">
+    <span class="label reveal">03 — The Greatest Night</span>
+    <h2 class="section-title reveal">The <em>Treble</em> — 1998–99</h2>
+    <div class="gold-bar reveal"></div>
+
+    <div class="treble-layout">
+      <div class="reveal-l">
+        <div class="treble-main-img">
+          <img src="https://www.fcbarcelona.com/photo-resources/2019/03/23/2655276c-7de9-47f1-a09b-24433027697b/FINAL-CHAMPIONS-1999-EUFORIA-MANCHESTER.jpg?width=1200&height=750" alt="Camp Nou 1999" loading="lazy">
+          <div class="treble-badge">
+            <span class="treble-badge-title">THE TREBLE</span>
+            <span class="treble-badge-sub">1998 / 99</span>
+          </div>
+          <div class="img-caption">Camp Nou, Barcelona — 26 May 1999</div>
+        </div>
+        <div class="treble-timeline" style="margin-top:2rem;">
+          <div class="timeline-item">
+            <div class="timeline-dot gold"></div>
+            <div>
+              <span class="timeline-text-title">Premier League</span>
+              <span class="timeline-text-sub">Won on the final day, pipping Arsenal on goal difference.</span>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot gold"></div>
+            <div>
+              <span class="timeline-text-title">FA Cup</span>
+              <span class="timeline-text-sub">Wembley — United 2–0 Newcastle United.</span>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div>
+              <span class="timeline-text-title">Champions League Final</span>
+              <span class="timeline-text-sub">1–0 down. 90th minute. Sheringham. Then Solskjær. 2–1. The Miracle of the Camp Nou.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal-r">
+        <span class="label">The Heroes of '99</span>
+        <p style="color:var(--muted);font-size:0.9rem;line-height:1.8;margin-bottom:2rem;">On the night United needed everything, they had men who believed when belief seemed impossible. Teddy Sheringham and Ole Gunnar Solskjær — two substitutes — scored in injury time to complete the most dramatic comeback in Champions League history.</p>
+        <div class="heroes-row">
+          <div class="hero-thumb">
+            <img src="https://static0.givemesportimages.com/wordpress/wp-content/uploads/2025/04/white-black-modern-photo-collage-before-after-youtube-thumbnail-2025-04-01t182908-244.png?w=1600&h=1200&fit=crop" alt="Peter Schmeichel" loading="lazy">
+            <div class="hero-thumb-info">
+              <span class="h-name">Schmeichel</span>
+              <span class="h-role">Goalkeeper</span>
+            </div>
+          </div>
+          <div class="hero-thumb">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT201MnijvbjbJ41JZpABAFFFbu8GXreHBRuA&s" alt="Roy Keane" loading="lazy">
+            <div class="hero-thumb-info">
+              <span class="h-name">Roy Keane</span>
+              <span class="h-role">Captain</span>
+            </div>
+          </div>
+          <div class="hero-thumb">
+            <img src="https://static.independent.co.uk/2021/03/02/08/newFile-4.jpg" alt="Andy Cole" loading="lazy">
+            <div class="hero-thumb-info">
+              <span class="h-name">Andy Cole</span>
+              <span class="h-role">Striker</span>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:2rem;padding:1.5rem;background:var(--dark2);border-left:3px solid var(--red);">
+          <p style="font-style:italic;font-size:0.95rem;color:var(--muted);line-height:1.7;">"The moment I saw the ball hit the net I didn't know what to do with myself. Twenty-six years of watching this club and this was the moment."</p>
+          <p style="margin-top:0.6rem;font-family:var(--sans);font-size:0.52rem;letter-spacing:0.25em;color:var(--faint);text-transform:uppercase;">— Sir Alex Ferguson, Camp Nou, 1999</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RONALDO / GLORY DAYS -->
+<section id="ronaldo" style="background:var(--dark2);">
+  <div class="container">
+    <div class="ronaldo-layout">
+      <div class="reveal-l">
+        <div class="ronaldo-img">
+          <img src="https://cdn.resfu.com/media/img_news/afp_en_b7ac2b3cfacf4a447f8f4fbba0f8107ace126d8d.jpg?size=1000x&lossy=1" alt="Cristiano Ronaldo" loading="lazy">
+          <div class="img-caption">Cristiano Ronaldo — 2003 to 2009</div>
+        </div>
+      </div>
+      <div class="text-block reveal-r">
+        <span class="label">04 — The Golden Generation</span>
+        <h2 class="section-title">Ronaldo &<br><em>The Glory Days</em></h2>
+        <div class="red-bar"></div>
+        <p>In 2003, a skinny 18-year-old from Madeira arrived at Old Trafford. Within five years, <strong>Cristiano Ronaldo</strong> would become the greatest player on the planet — winning the Ballon d'Or and the Champions League in 2008.</p>
+        <p>Alongside <strong>Wayne Rooney, Paul Scholes, Ryan Giggs</strong> and the incomparable <strong>Carlos Tevez</strong>, this was a United team of supreme attacking football. Three consecutive Premier League titles. A Champions League won in Moscow on penalties.</p>
+        <p>Ferguson had done it again — built a dynasty for a new generation, connecting the present to the glorious past.</p>
+        <div class="stat-row">
+          <div class="stat-box">
+            <span class="stat-box-num">118</span>
+            <span class="stat-box-label">Ronaldo Goals for United</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-box-num">2008</span>
+            <span class="stat-box-label">Champions League Won</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-box-num">3</span>
+            <span class="stat-box-label">Consecutive PL Titles</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-box-num">1</span>
+            <span class="stat-box-label">Ballon d'Or at MUFC</span>
+          </div>
+        </div>
+        <div class="pl-wins-strip">
+          <span class="pl-wins-num">20</span>
+          <span class="pl-wins-text">Premier League Titles<br>Most in English Football History</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ERA DIVIDER: PRESENT -->
+<div class="era-divider" style="background:var(--dark2);">
+  <div class="era-divider-inner" style="background:var(--dark2);">
+    <span class="era-num">ACT III</span>
+    <div class="era-dot"></div>
+    <span class="era-title">The Present — Struggle, Belief & Forever</span>
+  </div>
+</div>
+
+<!-- PRESENT -->
+<section id="present">
+  <div class="container">
+    <span class="label reveal">05 — After the Legend</span>
+    <h2 class="section-title reveal">The Struggle &<br><em>The Belief</em></h2>
+    <div class="gold-bar reveal"></div>
+
+    <div class="present-banner reveal">
+      <div class="pb-icon">2013</div>
+      <div class="pb-text">
+        <h3>The Day the Music Changed</h3>
+        <p>When Sir Alex Ferguson retired in May 2013, Manchester United faced a challenge unlike any in their history — not tragedy, but transition. The void left by the greatest manager in the game's history was unfillable. The years that followed brought instability: Moyes, Van Gaal, Mourinho, Solskjær, Ten Hag. Some progress. Some heartbreak. Always the shadow of greatness past. But through every dark moment, the fans never left. The badge never lost its meaning. The belief never died.</p>
+      </div>
+    </div>
+
+    <div class="two-col" style="margin-top:3rem;">
+      <div class="text-block reveal-l">
+        <span class="label">The Strongest Fanbase on Earth</span>
+        <h2 class="section-title" style="font-size:clamp(1.6rem,4vw,2.5rem);">1.1 Billion <em>Reasons</em> to Believe</h2>
+        <div class="gold-bar"></div>
+        <p>Manchester United has the <strong>largest global fanbase of any football club</strong> — over 1.1 billion supporters worldwide. From Bengaluru to Buenos Aires, from Tokyo to Toronto, the red shirt is recognised everywhere.</p>
+        <p>In the post-Ferguson era, the performances may have faltered. The trophies may have been fewer. But the passion in the stands of Old Trafford never dimmed. The Stretford End still roars. The faithful still come. Because they remember <strong>Munich</strong>. They remember <strong>1968</strong>. They remember <strong>the Treble</strong>. And they know: this is a club that always comes back.</p>
+        <p>New Amorim era. New beginnings. Old soul. <strong>The Theatre of Dreams is never dark for long.</strong></p>
+      </div>
+      <div class="reveal-r">
+        <div class="img-frame" style="aspect-ratio:4/3;">
+          <img src="https://i.redd.it/take-me-home-united-road-the-new-tifo-is-unveiled-v0-8x8cd45nulze1.png?width=2048&format=png&auto=webp&s=c000dd4c68b40e87639e11d4689723647007747a" alt="Old Trafford crowd" loading="lazy">
+          <div class="img-caption">Old Trafford — The Theatre of Dreams</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fanbase-strip reveal">
+      <span class="fanbase-num">1.1 Billion</span>
+      <span class="fanbase-label">Manchester United Supporters Worldwide — The Largest Fanbase in Football</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOREVER -->
+<section id="forever" style="min-height:60vh;padding:0;">
+  <div class="forever-bg">
+    <img src="https://i.redd.it/take-me-home-united-road-the-new-tifo-is-unveiled-v0-8x8cd45nulze1.png?width=2048&format=png&auto=webp&s=c000dd4c68b40e87639e11d4689723647007747a" alt="Old Trafford forever" loading="lazy">
+  </div>
+  <div class="forever-overlay"></div>
+  <div class="forever-content reveal">
+    <div class="hero-badge" style="display:inline-block;margin:0 auto 2.5rem;">1878 — Forever</div>
+    <h2 class="forever-big">
+      We Always
+      <em>Believe</em>
+    </h2>
+    <div class="forever-rule"></div>
+    <p class="forever-sub">From the Busby Babes to the Theatre of Dreams — the story is never over.</p>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-left">We Always Believe — Manchester United</span>
+  <span class="footer-center">Past · Present · Forever</span>
+  <span class="footer-right">CIE-3 Poster Project · Visual Design</span>
+</footer>
+
+<script>
+// Nav scroll
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('solid', window.scrollY > 60);
+}, { passive: true });
+
+// Parallax hero
+const heroImg = document.querySelector('.hero-img img');
+window.addEventListener('scroll', () => {
+  if (window.scrollY < window.innerHeight) {
+    heroImg.style.transform = `scale(1.05) translateY(${window.scrollY * 0.18}px)`;
+  }
+}, { passive: true });
+
+// Reveal on scroll
+const reveals = document.querySelectorAll('.reveal, .reveal-l, .reveal-r');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const siblings = [...entry.target.parentElement.children].filter(el =>
+        el.classList.contains('reveal') || el.classList.contains('reveal-l') || el.classList.contains('reveal-r')
+      );
+      const idx = siblings.indexOf(entry.target);
+      setTimeout(() => entry.target.classList.add('in'), idx * 100);
+      io.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+reveals.forEach(el => io.observe(el));
+</script>
+</body>
+</html>
